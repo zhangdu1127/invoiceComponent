@@ -66,7 +66,7 @@ class Invoice extends React.Component {
   }
   //清空当前表单内容
   clearVal() {
-    this.setState({ invoice_title: "", invoice_num: "", invoice_default: false })
+    this.setState({ invoice_title: "", invoice_num: "" })
   }
   //是否显示当前窗口
   isShowInvoice(e) {
@@ -78,8 +78,12 @@ class Invoice extends React.Component {
       invoice.style.display = "none";
     }
     else {
-      invoice.style.display = "black";
+      invoice.style.display = "block";
     }
+    //清空输入
+    this.clearVal();
+    //清空选中
+    document.getElementById("invoice_checkbox").checked = false
   }
   /**生命周期
    * 
