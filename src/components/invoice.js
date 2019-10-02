@@ -23,7 +23,7 @@ export default class InvoiceBtn extends React.Component {
   }
 }
 
-//Invoice 模态框
+//Invoice 模态框组件
 class Invoice extends React.Component {
   constructor(props) {
     super(props);
