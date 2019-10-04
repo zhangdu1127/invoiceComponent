@@ -8,6 +8,7 @@
     top: 0;
     left: 0;
 }
+/*将当前组件转成内联块*/
 .invoice{
     display: inline-block;
     cursor:default;
