@@ -8,17 +8,17 @@ export default class InvoiceBtn extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = { url: this.props.url, method: this.props.method, contentText: this.props.contentText }
-    this.show = this.show.bind(this)
+    this.state = { url: this.props.url, method: this.props.method, contentText: this.props.contentText, isShowChild: false }
+    this.show = this.show.bind(this);
   }
-  //显示invoice组件
+  //显示与隐藏子组件
   show() {
-    document.getElementById("invoice").style.display = "block";
+    this.setState({ isShowChild: !this.state.isShowChild })
   }
   render() {
     return <div className="invoice">
       <span onClick={this.show}>{this.state.contentText}</span>
-      <Invoice></Invoice>
+      {this.state.isShowChild && (<Invoice url={this.state.url} method={this.state.method} hide={this.show} />)}
     </div>
   }
 }
@@ -44,7 +44,6 @@ class Invoice extends React.Component {
     this.state = { invoice_title: "", invoice_num: "", invoice_default: false, url: this.props.url, method: this.props.method, reg_num: /^\d+$/, isShow: true };
     //将方法绑定到当前对象
     this.changeVal = this.changeVal.bind(this);
-    this.isShowInvoice = this.isShowInvoice.bind(this);
     this.clearVal = this.clearVal.bind(this);
   }
   //获取输入框的值 双向绑定
@@ -68,23 +67,6 @@ class Invoice extends React.Component {
   clearVal() {
     this.setState({ invoice_title: "", invoice_num: "" })
   }
-  //是否显示当前窗口
-  isShowInvoice(e) {
-    let event = e || window.event;
-    event.preventDefault();
-
-    let invoice = document.getElementById("invoice");
-    if (this.state.isShow) {
-      invoice.style.display = "none";
-    }
-    else {
-      invoice.style.display = "block";
-    }
-    //清空输入
-    this.clearVal();
-    //清空选中
-    document.getElementById("invoice_checkbox").checked = false
-  }
   /**生命周期
    * 
    */
@@ -96,7 +78,7 @@ class Invoice extends React.Component {
       <form id="invoice" className="invoice_wrap" action={this.state.url} method={this.state.method}>
         <div className="invoice_box">
           <ul>
-            <li className="invoice_close"><span title="关闭当前弹窗" onClick={this.isShowInvoice}>&times;</span></li>
+            <li className="invoice_close"><span title="关闭当前弹窗" onClick={this.props.hide}>&times;</span></li>
             <li className="invoice_title">
               <h2>Add new invoice infomation</h2>
             </li>
