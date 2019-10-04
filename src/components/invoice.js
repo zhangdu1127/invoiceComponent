@@ -9,16 +9,17 @@ export default class InvoiceBtn extends React.Component {
   constructor(props) {
     super(props);
     this.state = { url: this.props.url, method: this.props.method, contentText: this.props.contentText, isShowChild: false }
-    this.show = this.show.bind(this);
+    //绑定事件到当前对象
+    this.isShowChildComponent = this.isShowChildComponent.bind(this);
   }
   //显示与隐藏子组件
-  show() {
+  isShowChildComponent() {
     this.setState({ isShowChild: !this.state.isShowChild })
   }
   render() {
     return <div className="invoice">
-      <span onClick={this.show}>{this.state.contentText}</span>
-      {this.state.isShowChild && (<Invoice url={this.state.url} method={this.state.method} hide={this.show} />)}
+      <span onClick={this.isShowChildComponent}>{this.state.contentText}</span>
+      {this.state.isShowChild && (<Invoice url={this.state.url} method={this.state.method} hide={this.isShowChildComponent} />)}
     </div>
   }
 }
@@ -37,11 +38,11 @@ class Invoice extends React.Component {
      * url 表单发送的地址
      * method 表单发送的方法
      * 
-     * isShow 是否显示当前框
+     * 
      * invoice_btnObj 弹出Invoice组件的按钮对象
      * reg_num 当前发票数字类型的正则
      */
-    this.state = { invoice_title: "", invoice_num: "", invoice_default: false, url: this.props.url, method: this.props.method, reg_num: /^\d+$/, isShow: true };
+    this.state = { invoice_title: "", invoice_num: "", invoice_default: false, url: this.props.url, method: this.props.method, reg_num: /^\d+$/ };
     //将方法绑定到当前对象
     this.changeVal = this.changeVal.bind(this);
     this.clearVal = this.clearVal.bind(this);
